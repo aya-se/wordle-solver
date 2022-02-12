@@ -14,3 +14,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.form-letter {
+  width: 50px;
+  margin-top: 2.5px;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  margin-bottom: 2.5px;
+  border-radius: 0px;
+}
