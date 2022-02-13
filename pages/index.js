@@ -1,27 +1,93 @@
-import Head from 'next/head'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import React, { useState } from 'react';
+import Head from 'next/head';
 
 export default function Home() {
+  const [letters, setLetters] = useState(Array(30).fill(''));
+  const [letterIdx, setLetterIdx] = useState(0);
+  const onClickLetter = (str) => {
+    if (letterIdx === 30) return;
+    setLetters(
+      letters.map((letter, index) => (index === letterIdx ? str : letter))
+    );
+    setLetterIdx(letterIdx+1);
+  };
   return (
     <div>
-    <Header/>
-    <div className="container my-3">
-      <Head>
-        <title>Wordle Solver</title>
-      </Head>
-      <a href="https://www.nytimes.com/games/wordle/index.html">本日のWordle</a>
-      <form>
-          { [1,2,3,4,5].map((i) => 
+      <div className="container my-3">
+        <Head>
+          <title>Wordle Solver</title>
+        </Head>
+        <div id="letters" className="my-3">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="d-flex justify-content-center">
-            {[1,2,3,4,5].map((j)=>
-              <input key={i+"-"+j} id={i+"-"+j} type="text" className="form-control form-control-lg form-letter" size="1" maxLength="1"/>
-            )}
+              {[1, 2, 3, 4, 5].map((j) => (
+                <button
+                  key={i + '-' + j}
+                  type="button"
+                  className="btn btn-letter"
+                >
+                  {letters[(i - 1) * 5 + (j - 1)]}
+                </button>
+              ))}
             </div>
-          )}
-      </form>
+          ))}
+        </div>
+        <div id="keyboards" className="my-3">
+          <div id="keyboards-row1" className="d-flex justify-content-center">
+            {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((i) => (
+              <button
+                key={i}
+                id={i}
+                type="button"
+                className="btn btn-keyboard"
+                onClick={() => onClickLetter(i)}
+              >
+                {i}
+              </button>
+            ))}
+          </div>
+          <div id="keyboards-row2" className="d-flex justify-content-center">
+            {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((i) => (
+              <button
+                key={i}
+                id={i}
+                type="button"
+                className="btn btn-keyboard"
+                onClick={() => onClickLetter(i)}
+              >
+                {i}
+              </button>
+            ))}
+          </div>
+          <div id="keyboards-row2" className="d-flex justify-content-center">
+            <button
+              type="button"
+              className="btn btn-keyboard btn-keyboard-lg"
+              onClick={() => onClickEnter(i)}
+            >
+              ENTER
+            </button>
+            {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((i) => (
+              <button
+                key={i}
+                id={i}
+                type="button"
+                className="btn btn-keyboard"
+                onClick={() => onClickLetter(i)}
+              >
+                {i}
+              </button>
+            ))}
+            <button
+              type="button"
+              className="btn btn-keyboard btn-keyboard-lg"
+              onClick={() => onClickDelete(i)}
+            >
+              DELETE
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <Footer/>
-    </div>
-  )
+  );
 }
