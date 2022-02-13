@@ -23,13 +23,12 @@ a {
   margin-right: 2.5px;
   margin-bottom: 2.5px;
   border-radius: 0px;
-  border-color: lightgray;
+  border-color: #d3d6da;
   border-width: 2px;
   text-align: center !important;
   vertical-align: center !important;
   font-size: 30px;
   font-weight: bold;
-  color: rgb(72, 72, 72);
   padding: 0px;
 }
 
@@ -45,7 +44,6 @@ a {
   text-align: center !important;
   vertical-align: center !important;
   font-size: 20px;
-  color: rgb(72, 72, 72);
   padding: 0px;
 }
 
