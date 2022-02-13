@@ -6,7 +6,8 @@ export default function Info() {
       <Head>
         <title>Info | Wordle Solver</title>
       </Head>
-      <p>hoge</p>
+      <h2>このアプリケーションは何？</h2>
+      <p>Wordleを一緒に解いてくれます。</p>
     </div>
   );
 }
