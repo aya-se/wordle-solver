@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
-      <div className="container-fluid">
+      <div className="container-fluid my-1">
         <h3 className="me-3 my-1">
           <Link className="navbar-brand" href="/">
             Wordle Solver
