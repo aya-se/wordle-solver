@@ -6,23 +6,37 @@ export default function Home() {
   const [colors, setColors] = useState(Array(30).fill('white'));
   const [letters, setLetters] = useState(Array(30).fill(''));
   const [letterIdx, setLetterIdx] = useState(0);
+  const [candidates, setCandidates] = useState(Array(26).fill([true, true, true, true, true]));
 
   // 文字ボタンクリック時の動作
   const onClickLetter = (idx) => {
     if (letters[idx] === '') return;
     let nextColor = 'white';
-    if (colors[idx] === 'white') nextColor = 'green';
+    if (colors[idx] === 'white' || colors[idx] === 'gray') nextColor = 'green';
     else if (colors[idx] === 'green') nextColor = 'yellow';
     else if (colors[idx] === 'yellow') nextColor = 'gray';
-    else if (colors[idx] === 'gray') nextColor = 'white';
+    let newColors = colors;
     setLetterStyle(idx, nextColor);
-    setColors(
-      colors.map((color, index) => (index === idx ? nextColor : color))
-    );
+    newColors[idx] = nextColor;
+    // 同じ列の同じ文字は設定を同期
+    for (let i=idx%5; i<30; i+=5) {
+      console.log(letters[i]);
+      if(letters[idx] === letters[i]) {
+        newColors[i] = nextColor;
+        setLetterStyle(i, nextColor);
+      }
+    }
+    setColors(newColors);
   };
 
   // 文字ボタンのスタイル変更
   const setLetterStyle = (idx, style) => {
+    // colorsを更新
+    console.log(idx,style);
+    setColors(
+      colors.map((color, index) => (index === idx ? style : color))
+    );
+    // スタイルを更新
     if (style === 'white') {
       document.getElementById('letter-' + idx).style.backgroundColor = 'white';
       document.getElementById('letter-' + idx).style.borderColor = '#D3D6DA';
@@ -51,6 +65,15 @@ export default function Home() {
     setLetters(
       letters.map((letter, index) => (index === letterIdx ? str : letter))
     );
+    // 同じ列の同じ文字と設定を同期
+    for (let i = letterIdx % 5; i <= letterIdx; i += 5) {
+      if (letters[i] === str) {
+        setLetterStyle(letterIdx, colors[i]);
+        break;
+      }
+      // 該当文字が無い場合は'gray'
+      if (i === letterIdx) setLetterStyle(letterIdx, 'gray');
+    }
     setLetterIdx(letterIdx + 1);
   };
 
