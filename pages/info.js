@@ -11,10 +11,10 @@ export default function Info() {
       <h2>使用したデータについて</h2>
       <p>
         英単語のリストは
-        <a target="_blank" href="https://github.com/dwyl/english-words" rel="noreferrer">
+        <a className="link-underline" target="_blank" href="https://github.com/dwyl/english-words" rel="noreferrer">
           こちらのデータ
         </a>
-        を利用しています。Wordleで出題されうる全ての単語を網羅できている保証はありませんが、おそらく概ね揃っているでしょう。
+        を利用しています。Wordleの語彙とは必ずしも一致しない為、Wordleで出題されうる全ての単語を網羅できている保証がありません。また逆に、Wordleには存在しない単語が一部含まれている場合があります。
       </p>
     </div>
   );
