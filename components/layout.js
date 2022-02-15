@@ -5,7 +5,7 @@ export default function Layout({ children, ...props }) {
   return (
     <div>
       <Header />
-      <div {...props}>{children}</div>
+      <div className="mx-3" {...props}>{children}</div>
       <Footer />
     </div>
   );

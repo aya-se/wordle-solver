@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Header() {
   return (
@@ -6,7 +7,16 @@ export default function Header() {
       <div className="container-fluid my-1">
         <h3 className="me-3 my-1">
           <Link className="navbar-brand" href="/">
-            Wordle Solver
+            <a className="link-underline">
+              <Image
+                className=""
+                src="/blob.png"
+                alt=""
+                width="30"
+                height="30"
+              />
+              <span className="mx-2">Wordle Solver Blob</span>
+            </a>
           </Link>
         </h3>
         <button
@@ -23,26 +33,29 @@ export default function Header() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav">
             <li className="nav-item mx-3">
-              <Link className="nav-link" href="/">
-                Home
+              <Link href="/">
+                <a className="nav-link link-underline">Home</a>
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link" href="/feature">
-                Feature
+              <Link href="/feature">
+                <a className="nav-link link-underline">Feature</a>
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link" href="/info">
-                Info
+              <Link href="/info">
+                <a className="nav-link link-underline">Info</a>
               </Link>
             </li>
             <li className="nav-item mx-3">
               <a
-                className=""
+                className="nav-link link-underline"
+                target="_blank"
                 href="https://www.nytimes.com/games/wordle/index.html"
+                rel="noreferrer"
               >
-                Wordle<em className="bi bi-box-arrow-up-right"/>
+                Wordle
+                <em className="bi bi-box-arrow-up-right mx-1" />
               </a>
             </li>
           </ul>

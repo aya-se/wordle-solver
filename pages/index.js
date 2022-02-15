@@ -1,47 +1,51 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
+import WordList from '/components/WordList';
 
 export default function Home() {
-  const [colors, setColors] = useState(Array(30).fill("white"));
-  const [letters, setLetters] = useState(Array(30).fill(""));
+  const [colors, setColors] = useState(Array(30).fill('white'));
+  const [letters, setLetters] = useState(Array(30).fill(''));
   const [letterIdx, setLetterIdx] = useState(0);
 
+  // 文字ボタンクリック時の動作
   const onClickLetter = (idx) => {
-    if (letters[idx]==='') return;
-    let nextColor = "white";
-    if (colors[idx] === "white") nextColor = "green";
-    else if (colors[idx] === "green") nextColor = "yellow";
-    else if (colors[idx] === "yellow") nextColor = "gray";
-    else if (colors[idx] === "gray") nextColor = 'white';
+    if (letters[idx] === '') return;
+    let nextColor = 'white';
+    if (colors[idx] === 'white') nextColor = 'green';
+    else if (colors[idx] === 'green') nextColor = 'yellow';
+    else if (colors[idx] === 'yellow') nextColor = 'gray';
+    else if (colors[idx] === 'gray') nextColor = 'white';
     setLetterStyle(idx, nextColor);
     setColors(
       colors.map((color, index) => (index === idx ? nextColor : color))
     );
-  }
+  };
 
+  // 文字ボタンのスタイル変更
   const setLetterStyle = (idx, style) => {
-    if(style === "white") {
-      document.getElementById('letter-' + idx).style.backgroundColor = "white";
+    if (style === 'white') {
+      document.getElementById('letter-' + idx).style.backgroundColor = 'white';
       document.getElementById('letter-' + idx).style.borderColor = '#D3D6DA';
       document.getElementById('letter-' + idx).style.color = 'black';
-    }
-    else if (style === "green") {
-      document.getElementById('letter-' + idx).style.backgroundColor = '#6AAA64';
+    } else if (style === 'green') {
+      document.getElementById('letter-' + idx).style.backgroundColor =
+        '#6AAA64';
       document.getElementById('letter-' + idx).style.borderColor = '#6AAA64';
       document.getElementById('letter-' + idx).style.color = 'white';
-    }
-    else if (style === "yellow") {
-      document.getElementById('letter-' + idx).style.backgroundColor = '#C9B458';
+    } else if (style === 'yellow') {
+      document.getElementById('letter-' + idx).style.backgroundColor =
+        '#C9B458';
       document.getElementById('letter-' + idx).style.borderColor = '#C9B458';
       document.getElementById('letter-' + idx).style.color = 'white';
-    }
-    else if (style==="gray") {
-      document.getElementById('letter-' + idx).style.backgroundColor = '#787C7E';
+    } else if (style === 'gray') {
+      document.getElementById('letter-' + idx).style.backgroundColor =
+        '#787C7E';
       document.getElementById('letter-' + idx).style.borderColor = '#787C7E';
       document.getElementById('letter-' + idx).style.color = 'white';
     }
-  }
+  };
 
+  // アルファベットキー入力時の動作
   const onClickKeyboard = (str) => {
     if (letterIdx === 30) return;
     setLetters(
@@ -50,10 +54,12 @@ export default function Home() {
     setLetterIdx(letterIdx + 1);
   };
 
+  // Enterキー入力時の動作
   const onClickEnter = () => {
     // 検索
   };
 
+  // Deleteキー入力時の動作
   const onClickDelete = () => {
     if (letterIdx === 0) return;
     setLetters(
@@ -63,17 +69,19 @@ export default function Home() {
     setLetterIdx(letterIdx - 1);
   };
 
-  const onUseRealKeyboard = useCallback((event) => {
-    if (event.keyCode >= 65 && event.keyCode <= 90) {
-      onClickKeyboard(String.fromCharCode(event.keyCode));
-    }
-    else if (event.keyCode === 13) {
-      onClickEnter();
-    }
-    else if (event.keyCode === 8 || event.keyCode === 46) {
-      onClickDelete();
-    }
-  }, [onClickKeyboard, onClickEnter, onClickDelete]);
+  // PCキーボード入力イベント時の動作
+  const onUseRealKeyboard = useCallback(
+    (event) => {
+      if (event.keyCode >= 65 && event.keyCode <= 90) {
+        onClickKeyboard(String.fromCharCode(event.keyCode));
+      } else if (event.keyCode === 13) {
+        onClickEnter();
+      } else if (event.keyCode === 8 || event.keyCode === 46) {
+        onClickDelete();
+      }
+    },
+    [onClickKeyboard, onClickEnter, onClickDelete]
+  );
 
   useEffect(() => {
     document.addEventListener('keydown', onUseRealKeyboard, false);
@@ -86,8 +94,17 @@ export default function Home() {
     <div>
       <div className="container my-3">
         <Head>
-          <title>Wordle Solver</title>
+          <title>Home | Wordle Solver</title>
         </Head>
+        <div id="algorithms" className="my-3 d-flex justify-content-end">
+          <select className="form-select w-50">
+            <option value="1">
+              simple
+            </option>
+            <option value="2">algorithm 2</option>
+            <option value="3">algorithm 3</option>
+          </select>
+        </div>
         <div id="letters" className="my-3">
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="d-flex justify-content-center">
@@ -160,6 +177,7 @@ export default function Home() {
             </button>
           </div>
         </div>
+        <WordList />
       </div>
     </div>
   );
