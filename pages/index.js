@@ -6,7 +6,10 @@ export default function Home() {
   const [colors, setColors] = useState(Array(30).fill('white'));
   const [letters, setLetters] = useState(Array(30).fill(''));
   const [letterIdx, setLetterIdx] = useState(0);
-  const [candidates, setCandidates] = useState(Array(26).fill([true, true, true, true, true]));
+  // 予測に利用する行列
+  const [greens, setGreens] = useState(Array(26).fill(0));
+  const [yellows, setYellows] = useState(Array(26).fill(Array(5).fill(0)));
+  const [grays, setGrays] = useState(Array(26).fill(0));
 
   // 文字ボタンクリック時の動作
   const onClickLetter = (idx) => {
@@ -20,8 +23,7 @@ export default function Home() {
     newColors[idx] = nextColor;
     // 同じ列の同じ文字は設定を同期
     for (let i=idx%5; i<30; i+=5) {
-      console.log(letters[i]);
-      if(letters[idx] === letters[i]) {
+      if(letters[idx] === letters[i] && idx !== i) {
         newColors[i] = nextColor;
         setLetterStyle(i, nextColor);
       }
@@ -29,10 +31,9 @@ export default function Home() {
     setColors(newColors);
   };
 
-  // 文字ボタンのスタイル変更
+  // 文字ボタンのスタイル・各種state更新
   const setLetterStyle = (idx, style) => {
     // colorsを更新
-    console.log(idx,style);
     setColors(
       colors.map((color, index) => (index === idx ? style : color))
     );
@@ -79,7 +80,27 @@ export default function Home() {
 
   // Enterキー入力時の動作
   const onClickEnter = () => {
-    // 検索
+    // 予測行列の更新
+    let newGreens = Array(26).fill(0);
+    let newYellows = Array(26).fill(Array(5).fill(0));
+    let newGrays = Array(26).fill(0);
+    for(let i=0; i<letterIdx; i++) {
+      if (colors[i] === "green") {
+        newGreens[letters[i].charCodeAt(0)-65] = 1;
+      }
+      else if (colors[i] === "yellow") {
+        let preGreens = Array(5).fill(0);
+        for(let j=0; j<5;j++) preGreens[j] = newYellows[letters[i].charCodeAt(0) - 65][j];
+        preGreens[i % 5] = 1;
+        newYellows[letters[i].charCodeAt(0) - 65] = preGreens;
+      }
+      else if (colors[i] === "gray") {
+        newGrays[letters[i].charCodeAt(0) - 65] = 1;
+      }
+    }
+    setGreens(newGreens);
+    setYellows(newYellows);
+    setGrays(newGrays);
   };
 
   // Deleteキー入力時の動作
@@ -103,27 +124,28 @@ export default function Home() {
         onClickDelete();
       }
     },
-    [onClickKeyboard, onClickEnter, onClickDelete]
+    []
   );
 
   useEffect(() => {
-    document.addEventListener('keydown', onUseRealKeyboard, false);
+    //document.addEventListener('keydown', onUseRealKeyboard, false);
     return () => {
-      document.removeEventListener('keydown', onUseRealKeyboard, false);
+      //document.removeEventListener('keydown', onUseRealKeyboard, false);
     };
   }, [onUseRealKeyboard]);
 
   return (
     <div>
+      <p>{greens}</p>
+      <p>{yellows}</p>
+      <p>{grays}</p>
       <div className="container my-3">
         <Head>
           <title>Home | Wordle Solver</title>
         </Head>
         <div id="algorithms" className="my-3 d-flex justify-content-end">
           <select className="form-select w-50">
-            <option value="1">
-              simple
-            </option>
+            <option value="1">simple</option>
             <option value="2">algorithm 2</option>
             <option value="3">algorithm 3</option>
           </select>

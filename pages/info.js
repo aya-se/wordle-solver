@@ -7,7 +7,7 @@ export default function Info() {
         <title>Info | Wordle Solver</title>
       </Head>
       <h2>このアプリケーションは何？</h2>
-      <p>Wordleを一緒に解いてくれます。</p>
+      <p>かわいいBlobが、あなたと一緒にWordleの答えを考えてくれます。</p>
       <h2>使用したデータについて</h2>
       <p>
         英単語のリストは
