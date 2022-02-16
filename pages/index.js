@@ -1,15 +1,30 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import WordList from '/components/WordList';
+import Words from '/public/words_dictionary.json';
+import {simpleAlgorithm} from '/components/Algorithms';
 
 export default function Home() {
   const [colors, setColors] = useState(Array(30).fill('white'));
   const [letters, setLetters] = useState(Array(30).fill(''));
   const [letterIdx, setLetterIdx] = useState(0);
   // 予測に利用する行列
-  const [greens, setGreens] = useState(Array(26).fill(0));
+  const [greens, setGreens] = useState(Array(26).fill(-1));
   const [yellows, setYellows] = useState(Array(26).fill(Array(5).fill(0)));
   const [grays, setGrays] = useState(Array(26).fill(0));
+  // ワードリスト
+  const [words, setWords] = useState([]);
+  // Wordリストの初期設定
+  useEffect(() => {
+    // wordles: Wordle上で対象になり得る単語のリスト
+    const wordles = Object.keys(JSON.parse(JSON.stringify(Words))).filter(
+      (value) => {
+        return value.length === 5;
+      }
+    );
+    setWords(wordles.slice(0, 100));
+    //setWords(wordles);
+  }, []);
 
   // 文字ボタンクリック時の動作
   const onClickLetter = (idx) => {
@@ -81,18 +96,18 @@ export default function Home() {
   // Enterキー入力時の動作
   const onClickEnter = () => {
     // 予測行列の更新
-    let newGreens = Array(26).fill(0);
+    let newGreens = Array(26).fill(-1);
     let newYellows = Array(26).fill(Array(5).fill(0));
     let newGrays = Array(26).fill(0);
     for(let i=0; i<letterIdx; i++) {
       if (colors[i] === "green") {
-        newGreens[letters[i].charCodeAt(0)-65] = 1;
+        newGreens[letters[i].charCodeAt(0)-65] = i%5;
       }
       else if (colors[i] === "yellow") {
-        let preGreens = Array(5).fill(0);
-        for(let j=0; j<5;j++) preGreens[j] = newYellows[letters[i].charCodeAt(0) - 65][j];
-        preGreens[i % 5] = 1;
-        newYellows[letters[i].charCodeAt(0) - 65] = preGreens;
+        let preYellows = Array(5).fill(0);
+        for(let j=0; j<5;j++) preYellows[j] = newYellows[letters[i].charCodeAt(0) - 65][j];
+        preYellows[i % 5] = 1;
+        newYellows[letters[i].charCodeAt(0) - 65] = preYellows;
       }
       else if (colors[i] === "gray") {
         newGrays[letters[i].charCodeAt(0) - 65] = 1;
@@ -101,6 +116,8 @@ export default function Home() {
     setGreens(newGreens);
     setYellows(newYellows);
     setGrays(newGrays);
+    // アルゴリズムによる計算
+    setWords(simpleAlgorithm(newGreens, newYellows, newGrays));
   };
 
   // Deleteキー入力時の動作
@@ -222,7 +239,7 @@ export default function Home() {
             </button>
           </div>
         </div>
-        <WordList />
+        <WordList words={words}/>
       </div>
     </div>
   );
