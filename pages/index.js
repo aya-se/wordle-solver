@@ -3,6 +3,7 @@ import Head from 'next/head';
 import WordList from '/components/WordList';
 import Words from '/public/words_dictionary.json';
 import {simpleAlgorithm} from '/components/Algorithms';
+import styles from '../styles/Home.module.scss';
 
 export default function Home() {
   const [colors, setColors] = useState(Array(30).fill('white'));
@@ -153,21 +154,18 @@ export default function Home() {
 
   return (
     <div>
-      <p>{greens}</p>
-      <p>{yellows}</p>
-      <p>{grays}</p>
-      <div className="container my-3">
-        <Head>
-          <title>Home | Wordle Solver</title>
-        </Head>
-        <div id="algorithms" className="my-3 d-flex justify-content-end">
+      <Head>
+        <title>Home | Wordle Solver</title>
+      </Head>
+      <div className={styles.container + ' my-3'}>
+        <section id="algorithms" className="my-3 d-flex justify-content-end">
           <select className="form-select w-50">
             <option value="1">simple</option>
             <option value="2">algorithm 2</option>
             <option value="3">algorithm 3</option>
           </select>
-        </div>
-        <div id="letters" className="my-3">
+        </section>
+        <section id="letters" className="my-3">
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="d-flex justify-content-center">
               {[1, 2, 3, 4, 5].map((j) => (
@@ -183,8 +181,8 @@ export default function Home() {
               ))}
             </div>
           ))}
-        </div>
-        <div id="keyboards" className="my-3">
+        </section>
+        <section id="keyboards" className="my-3">
           <div id="keyboards-row1" className="d-flex justify-content-center">
             {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((i) => (
               <button
@@ -238,8 +236,8 @@ export default function Home() {
               DELETE
             </button>
           </div>
-        </div>
-        <WordList words={words}/>
+        </section>
+        <WordList words={words} />
       </div>
     </div>
   );

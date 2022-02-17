@@ -1,5 +1,8 @@
+@use 'variables' as v;
+
 .container {
-  padding: 0 2rem;
+  max-width: v.$large-pc-width !important;
+  margin: 0 auto;
 }
 
 .main {
@@ -15,6 +18,7 @@
 .footer {
   display: flex;
   flex: 1;
+  margin-top: 2rem;
   padding: 2rem 0;
   border-top: 1px solid #eaeaea;
   justify-content: center;
