@@ -8,14 +8,8 @@ export default function Header() {
         <h3 className="me-3 my-1">
           <Link className="navbar-brand" href="/">
             <a className="link-underline">
-              <Image
-                className=""
-                src="/blob.png"
-                alt=""
-                width="30"
-                height="30"
-              />
-              <span className="mx-2">Wordle Solver Blob</span>
+              
+              <span>Wordle Solver Blob</span>
             </a>
           </Link>
         </h3>
