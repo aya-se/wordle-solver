@@ -21,12 +21,14 @@ export default function Feature() {
           具体的には、高頻度で登場するアルファベットを多く含む単語は有益な情報を含んでいる可能性が高いと仮定することで、5文字のアルファベットの一般的な出現頻度の総和が高い順に単語を並び替えます。ただし、同じアルファベットが複数回登場する場合は評価を大幅に低くするよう調節します。これらの事項を考慮して、ある単語の
           <strong>評価値(Score)</strong>は以下のように計算します。
         </p>
-        <Image
-          src="/simple_score.png"
-          width={754}
-          height={95}
-          alt="simple_score"
-        />
+        <div className="my-5">
+          <Image
+            src="/simple_score.png"
+            width={754}
+            height={95}
+            alt="simple_score"
+          />
+        </div>
         <p>
           最終的には上記の評価値(Score)が高い順に単語を並び替えます。なお、一般的なアルファベットの出現頻度の情報は
           <a
