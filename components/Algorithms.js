@@ -36,8 +36,8 @@ export const simpleAlgorithm = (greens, yellows, grays) => {
       mapB[b[i].toUpperCase().charCodeAt(0) - 65]++;
     }
     for (let i=0; i<26; i++) {
-      if (mapA[i] > 0) scoreA += frequencies[i] ** (1 / mapA[i]);
-      if (mapB[i] > 0) scoreB += frequencies[i] ** (1 / mapB[i]);
+      if (mapA[i] > 0) scoreA += frequencies[i] * (mapA[i] ** (1 / 4));
+      if (mapB[i] > 0) scoreB += frequencies[i] * (mapB[i] ** (1 / 4));
     }
     return scoreB - scoreA;
   })

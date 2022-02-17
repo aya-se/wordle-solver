@@ -8,7 +8,6 @@ export default function Header() {
         <h3 className="me-3 my-1">
           <Link className="navbar-brand" href="/">
             <a className="link-underline">
-              
               <span>Wordle Solver Blob</span>
             </a>
           </Link>
@@ -26,30 +25,30 @@ export default function Header() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav">
-            <li className="nav-item mx-3">
+            <li className="nav-item">
               <Link href="/">
                 <a className="nav-link link-underline">Home</a>
               </Link>
             </li>
-            <li className="nav-item mx-3">
+            <li className="nav-item">
               <Link href="/feature">
                 <a className="nav-link link-underline">Feature</a>
               </Link>
             </li>
-            <li className="nav-item mx-3">
+            <li className="nav-item">
               <Link href="/info">
                 <a className="nav-link link-underline">Info</a>
               </Link>
             </li>
-            <li className="nav-item mx-3">
+            <li className="nav-item">
               <a
                 className="nav-link link-underline"
                 target="_blank"
                 href="https://www.nytimes.com/games/wordle/index.html"
                 rel="noreferrer"
               >
-                Wordle
-                <em className="bi bi-box-arrow-up-right mx-1" />
+                  Wordle
+                  <em className="bi bi-box-arrow-up-right mx-1" />
               </a>
             </li>
           </ul>

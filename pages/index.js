@@ -15,17 +15,6 @@ export default function Home() {
   const [grays, setGrays] = useState(Array(26).fill(0));
   // ワードリスト
   const [words, setWords] = useState([]);
-  // Wordリストの初期設定
-  useEffect(() => {
-    // wordles: Wordle上で対象になり得る単語のリスト
-    const wordles = Object.keys(JSON.parse(JSON.stringify(Words))).filter(
-      (value) => {
-        return value.length === 5;
-      }
-    );
-    setWords(wordles.slice(0, 100));
-    //setWords(wordles);
-  }, []);
 
   // 文字ボタンクリック時の動作
   const onClickLetter = (idx) => {
