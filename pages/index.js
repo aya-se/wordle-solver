@@ -17,7 +17,7 @@ export default function Home() {
 
   // 文字ボタンクリック時の動作
   const onClickLetter = (idx) => {
-    if (letters[idx] === '') return;
+    if (letters.length <= idx) return;
     let nextColor = 'white';
     if (colors[idx] === 'white' || colors[idx] === 'gray') nextColor = 'green';
     else if (colors[idx] === 'green') nextColor = 'yellow';
