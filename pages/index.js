@@ -42,7 +42,6 @@ export default function Home() {
       idx = [idx];
       style = [style];
     }
-    console.log(idx,style);
     for (let i=0; i<idx.length; i++) {
       // colorsを更新
       newColors[idx[i]] = style[i];
@@ -86,7 +85,6 @@ export default function Home() {
     for (let k=0; k < str.length; k++) {
       // 同じ列の同じ文字と設定を同期
       const idx = letterIdx + k;
-      console.log(k,colors);
       for (let i = idx % 5; i <= idx; i += 5) {
         if (letters[i] === str[k]) {
           idxs.push(idx);
