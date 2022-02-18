@@ -1,3 +1,5 @@
+@use 'variables' as v;
+
 html,
 body {
   padding: 0;
@@ -79,6 +81,15 @@ h3.section_title {
   font-size: 30px;
   font-weight: bold;
   padding: 0px;
+  @include v.mq(md) {
+    width: 40px;
+    height: 40px;
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    font-size: 24px;
+  }
 }
 
 .btn-keyboard {
