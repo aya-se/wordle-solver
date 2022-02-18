@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import WordList from '/components/WordList';
-import Words from '/public/words_dictionary.json';
 import {simpleAlgorithm} from '/components/Algorithms';
 import styles from '../styles/Home.module.scss';
 
 export default function Home() {
   const [colors, setColors] = useState(Array(30).fill('white'));
-  const [letters, setLetters] = useState(Array(30).fill(''));
+  const [letters, setLetters] = useState('');
   const [letterIdx, setLetterIdx] = useState(0);
   // 予測に利用する行列
-  const [greens, setGreens] = useState(Array(26).fill(-1));
+  const [greens, setGreens] = useState(Array(26).fill(Array(5).fill(0)));
   const [yellows, setYellows] = useState(Array(26).fill(Array(5).fill(0)));
-  const [grays, setGrays] = useState(Array(26).fill(0));
+  const [grays, setGrays] = useState(Array(26).fill(Array(5).fill(0)));
   // ワードリスト
   const [words, setWords] = useState([]);
 
@@ -38,69 +37,102 @@ export default function Home() {
 
   // 文字ボタンのスタイル・各種state更新
   const setLetterStyle = (idx, style) => {
-    // colorsを更新
-    setColors(
-      colors.map((color, index) => (index === idx ? style : color))
-    );
-    // スタイルを更新
-    if (style === 'white') {
-      document.getElementById('letter-' + idx).style.backgroundColor = 'white';
-      document.getElementById('letter-' + idx).style.borderColor = '#D3D6DA';
-      document.getElementById('letter-' + idx).style.color = 'black';
-    } else if (style === 'green') {
-      document.getElementById('letter-' + idx).style.backgroundColor =
-        '#6AAA64';
-      document.getElementById('letter-' + idx).style.borderColor = '#6AAA64';
-      document.getElementById('letter-' + idx).style.color = 'white';
-    } else if (style === 'yellow') {
-      document.getElementById('letter-' + idx).style.backgroundColor =
-        '#C9B458';
-      document.getElementById('letter-' + idx).style.borderColor = '#C9B458';
-      document.getElementById('letter-' + idx).style.color = 'white';
-    } else if (style === 'gray') {
-      document.getElementById('letter-' + idx).style.backgroundColor =
-        '#787C7E';
-      document.getElementById('letter-' + idx).style.borderColor = '#787C7E';
-      document.getElementById('letter-' + idx).style.color = 'white';
+    let newColors = colors;
+    if (idx.length === undefined) {
+      idx = [idx];
+      style = [style];
     }
+    console.log(idx,style);
+    for (let i=0; i<idx.length; i++) {
+      // colorsを更新
+      newColors[idx[i]] = style[i];
+      // スタイルを更新
+      if (style[i] === 'white') {
+        document.getElementById('letter-' + idx[i]).style.backgroundColor =
+          'white';
+        document.getElementById('letter-' + idx[i]).style.borderColor =
+          '#D3D6DA';
+        document.getElementById('letter-' + idx[i]).style.color = 'black';
+      } else if (style[i] === 'green') {
+        document.getElementById('letter-' + idx[i]).style.backgroundColor =
+          '#6AAA64';
+        document.getElementById('letter-' + idx[i]).style.borderColor =
+          '#6AAA64';
+        document.getElementById('letter-' + idx[i]).style.color = 'white';
+      } else if (style[i] === 'yellow') {
+        document.getElementById('letter-' + idx[i]).style.backgroundColor =
+          '#C9B458';
+        document.getElementById('letter-' + idx[i]).style.borderColor =
+          '#C9B458';
+        document.getElementById('letter-' + idx[i]).style.color = 'white';
+      } else if (style[i] === 'gray') {
+        document.getElementById('letter-' + idx[i]).style.backgroundColor =
+          '#787C7E';
+        document.getElementById('letter-' + idx[i]).style.borderColor =
+          '#787C7E';
+        document.getElementById('letter-' + idx[i]).style.color = 'white';
+      }
+    }
+    setColors(newColors);
   };
 
   // アルファベットキー入力時の動作
   const onClickKeyboard = (str) => {
-    if (letterIdx === 30) return;
-    setLetters(
-      letters.map((letter, index) => (index === letterIdx ? str : letter))
-    );
-    // 同じ列の同じ文字と設定を同期
-    for (let i = letterIdx % 5; i <= letterIdx; i += 5) {
-      if (letters[i] === str) {
-        setLetterStyle(letterIdx, colors[i]);
-        break;
+    if (letterIdx + str.length - 1 >= 30) return;
+    // 同時N文字入力に対応
+    setLetters(letters + str);
+    let idxs = [];
+    let styles = [];
+    for (let k=0; k < str.length; k++) {
+      // 同じ列の同じ文字と設定を同期
+      const idx = letterIdx + k;
+      console.log(k,colors);
+      for (let i = idx % 5; i <= idx; i += 5) {
+        if (letters[i] === str[k]) {
+          idxs.push(idx);
+          styles.push(colors[i]);
+          break;
+        }
+        // 該当文字が無い場合は'gray'
+        if (i === idx) {
+          idxs.push(idx);
+          styles.push('gray');
+        }
       }
-      // 該当文字が無い場合は'gray'
-      if (i === letterIdx) setLetterStyle(letterIdx, 'gray');
     }
-    setLetterIdx(letterIdx + 1);
+    setLetterIdx((letterIdx) => {
+      return letterIdx + str.length;
+    });
+    setLetterStyle(idxs, styles);
   };
 
   // Enterキー入力時の動作
   const onClickEnter = () => {
     // 予測行列の更新
-    let newGreens = Array(26).fill(-1);
+    let newGreens = Array(26).fill(Array(5).fill(0));
     let newYellows = Array(26).fill(Array(5).fill(0));
-    let newGrays = Array(26).fill(0);
+    let newGrays = Array(26).fill(Array(5).fill(0));
     for(let i=0; i<letterIdx; i++) {
       if (colors[i] === "green") {
-        newGreens[letters[i].charCodeAt(0)-65] = i%5;
+        let preGreens = Array(5).fill(0);
+        for (let j = 0; j < 5; j++)
+          preGreens[j] = newGreens[letters[i].charCodeAt(0) - 65][j];
+        preGreens[i % 5] = 1;
+        newGreens[letters[i].charCodeAt(0) - 65] = preGreens;
       }
       else if (colors[i] === "yellow") {
         let preYellows = Array(5).fill(0);
-        for(let j=0; j<5;j++) preYellows[j] = newYellows[letters[i].charCodeAt(0) - 65][j];
+        for (let j = 0; j < 5; j++)
+          preYellows[j] = newYellows[letters[i].charCodeAt(0) - 65][j];
         preYellows[i % 5] = 1;
         newYellows[letters[i].charCodeAt(0) - 65] = preYellows;
       }
       else if (colors[i] === "gray") {
-        newGrays[letters[i].charCodeAt(0) - 65] = 1;
+        let preGrays = Array(5).fill(0);
+        for (let j = 0; j < 5; j++)
+          preGrays[j] = newGrays[letters[i].charCodeAt(0) - 65][j];
+        preGrays[i % 5] = 1;
+        newGrays[letters[i].charCodeAt(0) - 65] = preGrays;
       }
     }
     setGreens(newGreens);
@@ -113,9 +145,7 @@ export default function Home() {
   // Deleteキー入力時の動作
   const onClickDelete = () => {
     if (letterIdx === 0) return;
-    setLetters(
-      letters.map((letter, index) => (index === letterIdx - 1 ? '' : letter))
-    );
+    setLetters(letters.slice(0, letterIdx - 1));
     setLetterStyle(letterIdx - 1, 'white');
     setLetterIdx(letterIdx - 1);
   };
@@ -226,7 +256,11 @@ export default function Home() {
             </button>
           </div>
         </section>
-        <WordList words={words} />
+        <WordList
+          words={words}
+          letterIdx={letterIdx}
+          onClickKeyboard={onClickKeyboard}
+        />
       </div>
     </div>
   );

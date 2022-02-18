@@ -13,16 +13,19 @@ export const simpleAlgorithm = (greens, yellows, grays) => {
       for(let j=0; j<5; j++) {
         const idx = value[j].toUpperCase().charCodeAt(0)-65;
         for(let i=0; i<26;i++) {
-          if (greens[i]===j && idx!==i) return false;
+          // その列に他のgreenな文字が指定されていればNG
+          if (greens[i][j] && i!==idx) return false;
           // yellowな文字を含んでいるか？
           if (yellows[i][j]) {
-            const str = String.fromCharCode(65+i).toLowerCase();
+            const str = String.fromCharCode(65 + i).toLowerCase();
             if (value.includes(str) === false) {
               return false;
             }
           }
         }
-        if (grays[idx]) return false;
+        // grayなはずの文字がその列に存在したらNG
+        if (grays[idx][j]) return false;
+        // yellowなはずの文字がまさにその列に存在したらNG
         if (yellows[idx][j]) return false;
       }
       return true;
