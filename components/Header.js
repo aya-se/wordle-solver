@@ -4,11 +4,11 @@ import Image from 'next/image';
 export default function Header() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
-      <div className="container-fluid my-1">
-        <h3 className="me-3 my-1">
+      <div className="container-fluid px-0">
+        <h3 className="my-1">
           <Link className="navbar-brand" href="/">
-            <a className="link-underline">
-              <span>Wordle Solver Blob</span>
+            <a className="link-underline px-2">
+              Wordle Solver Blob
             </a>
           </Link>
         </h3>
