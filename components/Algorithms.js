@@ -10,21 +10,23 @@ export const simpleAlgorithm = (greens, yellows, grays) => {
 
   wordles = wordles.filter(
     (value) => {
-      for(let j=0; j<5; j++) {
+      for(let j = 0; j < 5; j++) {
         const idx = value[j].toUpperCase().charCodeAt(0)-65;
-        for(let i=0; i<26;i++) {
+        for(let i = 0; i < 26; i++) {
           // その列に他のgreenな文字が指定されていればNG
           if (greens[i][j] && i!==idx) return false;
-          // yellowな文字を含んでいるか？
+          // yellowな文字を含んでいなければNG
           if (yellows[i][j]) {
             const str = String.fromCharCode(65 + i).toLowerCase();
-            if (value.includes(str) === false) {
-              return false;
-            }
+            if (!value.includes(str)) return false;
+          }
+          // grayな文字を含んでいたらNG
+          if (grays[i][j]) {
+            const str = String.fromCharCode(65 + i).toLowerCase();
+            for (let k = 0; k < 5; k++)
+              if (value[k] === str && !greens[i][k]) return false;
           }
         }
-        // grayなはずの文字がその列に存在したらNG
-        if (grays[idx][j]) return false;
         // yellowなはずの文字がまさにその列に存在したらNG
         if (yellows[idx][j]) return false;
       }
@@ -39,8 +41,8 @@ export const simpleAlgorithm = (greens, yellows, grays) => {
       mapB[b[i].toUpperCase().charCodeAt(0) - 65]++;
     }
     for (let i=0; i<26; i++) {
-      if (mapA[i] > 0) scoreA += frequencies[i] * (mapA[i] ** (1 / 4));
-      if (mapB[i] > 0) scoreB += frequencies[i] * (mapB[i] ** (1 / 4));
+      if (mapA[i] > 0) scoreA += frequencies[i] * (mapA[i] ** (1 / 2));
+      if (mapB[i] > 0) scoreB += frequencies[i] * (mapB[i] ** (1 / 2));
     }
     return scoreB - scoreA;
   })
