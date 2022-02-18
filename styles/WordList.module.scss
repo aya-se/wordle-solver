@@ -7,7 +7,9 @@
 }
 
 .word_list {
-  margin: 0px 30%;
+  width: 40%;
+  min-width: 200px;
+  margin: 0px auto;
 }
 .word_item {
   display: flex;
