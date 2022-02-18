@@ -1,4 +1,0 @@
-[ZoneTransfer]
-ZoneId=3
-ReferrerUrl=https://texclip.marutank.net/
-HostUrl=https://texclip.marutank.net/render.php/texclip20220218104803.png?s=%5Cbegin%7Balign*%7D%0A%20%20%5Ctext%7BScore%7D_w%3D%5Csum_%7Blet%5Cin%20w%7D%5Ctext%7Bfrequency%7D(let)%5Csqrt%7B%5Ctext%7Bcount%7D(let)%7D%0A%5Cend%7Balign*%7D&f=c&r=300&m=p&b=f&k=f
