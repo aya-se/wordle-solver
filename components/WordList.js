@@ -1,4 +1,5 @@
 import styles from '../styles/WordList.module.scss';
+import Image from 'next/image';
 
 export default function WordList(props) {
   // WordListの単語クリックで自動的に入力
@@ -31,8 +32,44 @@ export default function WordList(props) {
           </a>
         ))}
       </div>
-      {props.words.length === 0 && (
-        <p className="text-center">表示可能な英単語がありません……。</p>
+      {props.isLoading && (
+        <div>
+          <p className="text-center">読み込み中……。</p>
+          <p className="px-auto text-center">
+            <Image
+              src="/hyperblob.gif"
+              width={150}
+              height={150}
+              alt="blob_sad"
+            />
+          </p>
+        </div>
+      )}
+      {props.words.length === 0 && props.letterIdx === 0 && (
+        <div>
+          <p className="text-center">さぁ、本日のWordleを始めましょう！</p>
+          <p className="px-auto text-center">
+            <Image
+              src="/blob_bongo.gif"
+              width={150}
+              height={150}
+              alt="blob_conga"
+            />
+          </p>
+        </div>
+      )}
+      {props.words.length === 0 && props.letterIdx !== 0 && (
+        <div>
+          <p className="text-center">表示可能な英単語がありません……。</p>
+          <p className="px-auto text-center">
+            <Image
+              src="/blob_sad.gif"
+              width={150}
+              height={150}
+              alt="blob_sad"
+            />
+          </p>
+        </div>
       )}
     </section>
   );

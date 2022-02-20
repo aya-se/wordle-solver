@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import styles from '../styles/Info.module.scss';
 
 export default function Info() {
@@ -10,6 +11,32 @@ export default function Info() {
       <section>
         <h2 className="section_title">このアプリケーションは何？</h2>
         <p>かわいいBlobが、あなたと一緒にWordleの答えを考えてくれます。</p>
+        <div className="my-5 d-flex justify-content-center">
+          <Image
+            src="/blob_bongo.gif"
+            width={200}
+            height={200}
+            alt="blob_sample"
+          />
+          <Image
+            src="/blob_thinking.gif"
+            width={200}
+            height={200}
+            alt="blob_sample"
+          />
+          <Image
+            src="/blobwobwork.gif"
+            width={200}
+            height={200}
+            alt="blob_sample"
+          />
+          <Image
+            src="/blobtoiletflush.gif"
+            width={200}
+            height={200}
+            alt="blob_sample"
+          />
+        </div>
         <h2 className="section_title">使用したデータについて</h2>
         <p>
           英単語のリストは

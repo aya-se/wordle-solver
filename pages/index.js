@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import WordList from '/components/WordList';
+import Blob from '/components/Blob';
 import {simpleAlgorithm} from '/components/Algorithms';
 import styles from '../styles/Home.module.scss';
 
@@ -14,6 +15,7 @@ export default function Home() {
   const [grays, setGrays] = useState(Array(26).fill(Array(5).fill(0)));
   // ワードリスト
   const [words, setWords] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 文字ボタンクリック時の動作
   const onClickLetter = (idx) => {
@@ -106,6 +108,7 @@ export default function Home() {
 
   // Enterキー入力時の動作
   const onClickEnter = () => {
+    setIsLoading = true;
     // 予測行列の更新
     let newGreens = Array(26).fill(Array(5).fill(0));
     let newYellows = Array(26).fill(Array(5).fill(0));
@@ -138,6 +141,7 @@ export default function Home() {
     setGrays(newGrays);
     // アルゴリズムによる計算
     setWords(simpleAlgorithm(newGreens, newYellows, newGrays));
+    setIsLoading = false;
   };
 
   // Deleteキー入力時の動作
@@ -175,12 +179,8 @@ export default function Home() {
         <title>Home | Wordle Solver</title>
       </Head>
       <div className={styles.container + ' my-3'}>
-        <section id="algorithms" className="my-3 d-flex justify-content-end">
-          <select className="form-select w-50">
-            <option value="1">simple</option>
-            <option value="2">algorithm 2</option>
-            <option value="3">algorithm 3</option>
-          </select>
+        <section id="algorithms" className="my-3 d-flex justify-content-between">
+          <Blob letterIdx={letterIdx} words={words}/>
         </section>
         <section id="letters" className="my-3">
           {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -257,6 +257,7 @@ export default function Home() {
         <WordList
           words={words}
           letterIdx={letterIdx}
+          isLoading={isLoading}
           onClickKeyboard={onClickKeyboard}
         />
       </div>

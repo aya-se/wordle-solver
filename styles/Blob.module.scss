@@ -1,0 +1,38 @@
+@use 'variables' as v;
+
+.blob {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+}
+
+/* 吹き出し本体 */
+.balloon {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: calc(100% - 50px);
+  height: 50px;
+  align-items: center;
+  border-radius: 20px;
+  margin-left: 20px;
+  padding-left: 25px;
+  padding-right: 25px;
+  background-color: rgb(240, 240, 240);
+  @include v.mq(md) {
+    font-size: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.balloon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -25px;
+  margin-top: -15px;
+  border: 15px solid transparent;
+  border-right: 15px solid rgb(240, 240, 240);
+  z-index: 0;
+}
