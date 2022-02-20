@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function Feature() {
   return (
-    <div className={styles.container + ' my-3'}>
+    <div className={styles.container + ' my-3 fade-in'}>
       <Head>
         <title>Feature | Wordle Solver</title>
       </Head>

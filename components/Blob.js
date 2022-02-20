@@ -19,7 +19,8 @@ export default function Blob(props) {
     "ギリギリでクリア！あ、危なかった～～。",
     "うーん……、残念。まぁこんな日もあるよね。",
     "今日のWordleはどんな問題かな……？",
-    "まだまだこれからが本番！次の単語は……。"
+    "まだまだこれからが本番！次の単語は……。",
+    "うーん……、なかなか厳しい。ここが踏ん張りどころ。"
   ]
   const onChangeWords = useEffect(() => {
     setBlobBalloon(true);
@@ -73,6 +74,9 @@ export default function Blob(props) {
         } else if (prog <= 100) {
           setBlob('/blob_bongo.gif');
           setBalloon(blobComments[3]);
+        } else if (props.letterIdx >= 20 && prog >= 200) {
+          setBlob('/blob_thinking_fast.gif');
+          setBalloon(blobComments[15]);
         } else if (props.letterIdx >= 15 && prog >= 500) {
           setBlob('/blob_thinking.gif');
           setBalloon(blobComments[5]);

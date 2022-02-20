@@ -4,7 +4,7 @@ import styles from '../styles/Info.module.scss';
 
 export default function Info() {
   return (
-    <div className={styles.container + ' my-3'}>
+    <div className={styles.container + ' my-3 fade-in'}>
       <Head>
         <title>Info | Wordle Solver</title>
       </Head>

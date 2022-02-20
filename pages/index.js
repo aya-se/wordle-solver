@@ -17,6 +17,10 @@ export default function Home() {
   const [words, setWords] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(()=> {
+    setIsLoading(false);
+  }, [words])
+
   // 文字ボタンクリック時の動作
   const onClickLetter = (idx) => {
     if (letters.length <= idx) return;
@@ -108,7 +112,7 @@ export default function Home() {
 
   // Enterキー入力時の動作
   const onClickEnter = () => {
-    setIsLoading = true;
+    setIsLoading(true);
     // 予測行列の更新
     let newGreens = Array(26).fill(Array(5).fill(0));
     let newYellows = Array(26).fill(Array(5).fill(0));
@@ -141,7 +145,6 @@ export default function Home() {
     setGrays(newGrays);
     // アルゴリズムによる計算
     setWords(simpleAlgorithm(newGreens, newYellows, newGrays));
-    setIsLoading = false;
   };
 
   // Deleteキー入力時の動作
@@ -178,9 +181,17 @@ export default function Home() {
       <Head>
         <title>Home | Wordle Solver</title>
       </Head>
-      <div className={styles.container + ' my-3'}>
-        <section id="algorithms" className="my-3 d-flex justify-content-between">
-          <Blob letterIdx={letterIdx} words={words}/>
+      <div className={styles.container + ' my-3 fade-in'}>
+        <section
+          id="algorithms"
+          className="my-3 d-flex justify-content-between align-items-center"
+        >
+          <Blob letterIdx={letterIdx} words={words} />
+          <select className="form-select w-25 h-50 ms-1">
+            <option>simple</option>
+            <option>algorithm 2</option>
+            <option>algorithm 3</option>
+          </select>
         </section>
         <section id="letters" className="my-3">
           {[1, 2, 3, 4, 5, 6].map((i) => (
