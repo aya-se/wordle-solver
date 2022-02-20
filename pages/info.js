@@ -6,7 +6,7 @@ export default function Info() {
   return (
     <div className={styles.container + ' my-3 fade-in'}>
       <Head>
-        <title>Info | Wordle Solver</title>
+        <title>Info | Wordle Solver Blob</title>
       </Head>
       <section>
         <h2 className="section_title">このアプリケーションは何？</h2>

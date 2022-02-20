@@ -16,6 +16,8 @@ export default function Home() {
   // ワードリスト
   const [words, setWords] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessed, setIsSuccessed] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
 
   useEffect(()=> {
     setIsLoading(false);
@@ -179,7 +181,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Home | Wordle Solver</title>
+        <title>Wordle Solver Blob</title>
       </Head>
       <div className={styles.container + ' my-3 fade-in'}>
         <section
@@ -270,6 +272,7 @@ export default function Home() {
           letterIdx={letterIdx}
           isLoading={isLoading}
           onClickKeyboard={onClickKeyboard}
+          maxLength={20}
         />
       </div>
     </div>

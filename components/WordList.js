@@ -14,7 +14,7 @@ export default function WordList(props) {
       <h2 className={styles.section_title}>Next Word ... ?</h2>
       {props.isLoading===false && (
         <div className={styles.word_list + " fade-in"}>
-          {props.words.slice(0, 100).map((key, index) => (
+          {props.words.slice(0, props.maxLength).map((key, index) => (
             <a
               key={index}
               href="/hoge"

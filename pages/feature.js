@@ -6,7 +6,7 @@ export default function Feature() {
   return (
     <div className={styles.container + ' my-3 fade-in'}>
       <Head>
-        <title>Feature | Wordle Solver</title>
+        <title>Feature | Wordle Solver Blob</title>
       </Head>
       <section>
         <h2 className="section_title">アルゴリズム概要</h2>
