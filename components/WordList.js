@@ -7,7 +7,8 @@ export default function WordList(props) {
     event.preventDefault();
     if (props.letterIdx % 5 === 0)
       props.onClickKeyboard(word);
-  } 
+  }
+
   return (
     <section className="my-3">
       <h2 className={styles.section_title}>Next Word ... ?</h2>

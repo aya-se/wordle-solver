@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/Blob.module.scss';
 import Image from 'next/image';
 export default function Blob(props) {
@@ -17,8 +17,13 @@ export default function Blob(props) {
     "3回目で正解！！なかなかの結果！！",
     "正解おめでとう！明日も頑張ろう！",
     "ギリギリでクリア！あ、危なかった～～。",
-    "うーん……、残念。まぁこんな日もあるよね。"
+    "うーん……、残念。まぁこんな日もあるよね。",
+    "今日のWordleはどんな問題かな……？",
+    "まだまだこれからが本番！次の単語は……。"
   ]
+  const onChangeWords = useEffect(() => {
+    setBlobBalloon(true);
+  }, [props.words]);
   const setBlobBalloon = (status) => {
     if (!status) {
       //setBlob('/blob.png');
@@ -26,8 +31,13 @@ export default function Blob(props) {
     } else {
       const prog = props.words.length;
       if (props.letterIdx === 0) {
-        setBlob('/blob_pyon.gif');
-        setBalloon(blobComments[0]);
+        if (prog === 0) {
+          setBlob('/blob_pyon.gif');
+          setBalloon(blobComments[13]);
+        }else {
+          setBlob('/blob_pyon.gif');
+          setBalloon(blobComments[0]);
+        }
       } else if (prog === 0) {
         setBlob('/blob_sad.gif');
         setBalloon(blobComments[6]);
@@ -50,7 +60,7 @@ export default function Blob(props) {
         }
       } else if (props.letterIdx <= 5) {
         if (prog <= 500) {
-          setBlob('/blob_pyon.gif');
+          setBlob('/blobcaramelldansen.gif');
           setBalloon(blobComments[1]);
         } else {
           setBlob('/blob_pyon.gif');
@@ -61,14 +71,14 @@ export default function Blob(props) {
           setBlob('/conga_party_thinking_blob.gif');
           setBalloon(blobComments[4]);
         } else if (prog <= 100) {
-          setBlob('/blob_pyon.gif');
+          setBlob('/blob_bongo.gif');
           setBalloon(blobComments[3]);
         } else if (props.letterIdx >= 15 && prog >= 500) {
-          setBlob('/blob_thinking_fast.gif');
+          setBlob('/blob_thinking.gif');
           setBalloon(blobComments[5]);
         } else {
-          setBlob('/blob_pyon.gif');
-          setBalloon(blobComments[2]);
+          setBlob('/blobenjoy.gif');
+          setBalloon(blobComments[14]);
         }
       } else {
         setBlob('/blobsadcry.gif');
