@@ -22,9 +22,11 @@ export default function Blob(props) {
     "まだまだこれからが本番！次の単語は……。",
     "うーん……、なかなか厳しい。ここが踏ん張りどころ。"
   ]
-  const onChangeWords = useEffect(() => {
+  // Enter時の処理
+  useEffect(() => {
     setBlobBalloon(true);
   }, [props.words]);
+
   const setBlobBalloon = (status) => {
     if (!status) {
       //setBlob('/blob.png');
@@ -39,10 +41,13 @@ export default function Blob(props) {
           setBlob('/blob_pyon.gif');
           setBalloon(blobComments[0]);
         }
+      } else if(props.isFailed) {
+        setBlob('/blobsadcry.gif');
+        setBalloon(blobComments[12]);
       } else if (prog === 0) {
         setBlob('/blob_sad.gif');
         setBalloon(blobComments[6]);
-      } else if (prog === 1) {
+      } else if (props.isSuccessed) {
         if (props.letterIdx <= 5) {
           setBlob('/hyperblob.gif');
           setBalloon(blobComments[7]);
@@ -84,9 +89,6 @@ export default function Blob(props) {
           setBlob('/blobenjoy.gif');
           setBalloon(blobComments[14]);
         }
-      } else {
-        setBlob('/blobsadcry.gif');
-        setBalloon(blobComments[12]);
       }
     }
   }

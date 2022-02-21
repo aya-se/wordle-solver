@@ -19,6 +19,7 @@ export default function Home() {
   const [isSuccessed, setIsSuccessed] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
 
+  // ローディング処理
   useEffect(()=> {
     setIsLoading(false);
   }, [words])
@@ -115,6 +116,8 @@ export default function Home() {
   // Enterキー入力時の動作
   const onClickEnter = () => {
     setIsLoading(true);
+    setIsSuccessed(false);
+    setIsFailed(false);
     // 予測行列の更新
     let newGreens = Array(26).fill(Array(5).fill(0));
     let newYellows = Array(26).fill(Array(5).fill(0));
@@ -141,6 +144,18 @@ export default function Home() {
         preGrays[i % 5] = 1;
         newGrays[letters[i].charCodeAt(0) - 65] = preGrays;
       }
+    }
+    if (letterIdx % 5 === 0 && letterIdx !== 0) {
+      let isGreen = 1;
+      for (let j = 0; j < 5; j++) {
+        let isGreenPre = 0;
+        for (let i = 0; i < 26; i++) {
+          if (newGreens[i][j]) isGreenPre = 1;
+        }
+        if (!isGreenPre) isGreen = 0;
+      }
+      if (isGreen) setIsSuccessed(true);
+      if (!isGreen && letterIdx>=30) setIsFailed(true);
     }
     setGreens(newGreens);
     setYellows(newYellows);
@@ -188,7 +203,12 @@ export default function Home() {
           id="algorithms"
           className="my-3 d-flex justify-content-between align-items-center"
         >
-          <Blob letterIdx={letterIdx} words={words} />
+          <Blob
+            letterIdx={letterIdx}
+            words={words}
+            isSuccessed={isSuccessed}
+            isFailed={isFailed}
+          />
           <select className="form-select w-25 h-50 ms-1">
             <option>simple</option>
             <option>algorithm 2</option>
