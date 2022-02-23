@@ -40,85 +40,30 @@ h3.section_title {
   position: relative;
   display: inline-block;
   text-decoration: none;
-}
-.link-underline::after {
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: #333;
-  transform: scale(0, 1);
-  transform-origin: center top;
-  transition: transform 0.3s;
-}
-.link-underline:hover {
-  font-weight: bold;
-}
-.link-underline:hover::after {
-  transform: scale(1, 1);
+  &:after {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: #333;
+    transform: scale(0, 1);
+    transform-origin: center top;
+    transition: transform 0.3s;
+  }
+  &:hover {
+    font-weight: bold;
+    &:after {
+      transform: scale(1, 1);
+    }
+  }
 }
 
 .nav-link {
   width: 100%;
   min-width: 150px;
   text-align: center;
-}
-
-.btn-letter {
-  width: 50px;
-  height: 50px;
-  margin-top: 2.5px;
-  margin-left: 2.5px;
-  margin-right: 2.5px;
-  margin-bottom: 2.5px;
-  border-radius: 0px;
-  border-color: #d3d6da;
-  border-width: 2px;
-  text-align: center !important;
-  vertical-align: center !important;
-  font-size: 30px;
-  font-weight: bold;
-  padding: 0px;
-  @include v.mq(md) {
-    width: 40px;
-    height: 40px;
-    margin-top: 2px;
-    margin-left: 2px;
-    margin-right: 2px;
-    margin-bottom: 2px;
-    border-width: 1.6px;
-    font-size: 24px;
-  }
-}
-
-.btn-keyboard {
-  width: 40px;
-  height: 50px;
-  margin-top: 2.5px;
-  margin-left: 2.5px;
-  margin-right: 2.5px;
-  margin-bottom: 2.5px;
-  background-color: rgb(240, 240, 240);
-  border-width: 2px;
-  text-align: center !important;
-  vertical-align: center !important;
-  font-size: 20px;
-  padding: 0px;
-}
-
-.btn-keyboard-lg {
-  width: 62.5px;
-  font-size: 15px;
-}
-
-.btn-letter:focus {
-  box-shadow: none !important;
-}
-
-.btn-keyboard:focus {
-  box-shadow: none !important;
 }
 
 /* その場で */

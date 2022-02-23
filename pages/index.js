@@ -223,7 +223,7 @@ export default function Home() {
                   key={'letter-' + ((i - 1) * 5 + (j - 1))}
                   id={'letter-' + ((i - 1) * 5 + (j - 1))}
                   type="button"
-                  className="btn btn-letter"
+                  className={styles.btn_letter + ' btn'}
                   onClick={() => onClickLetter((i - 1) * 5 + (j - 1))}
                 >
                   {letters[(i - 1) * 5 + (j - 1)]}
@@ -239,7 +239,7 @@ export default function Home() {
                 key={i}
                 id={i}
                 type="button"
-                className="btn btn-keyboard"
+                className={styles.btn_keyboard + ' btn'}
                 onClick={() => onClickKeyboard(i)}
               >
                 {i}
@@ -252,7 +252,7 @@ export default function Home() {
                 key={i}
                 id={i}
                 type="button"
-                className="btn btn-keyboard"
+                className={styles.btn_keyboard + ' btn'}
                 onClick={() => onClickKeyboard(i)}
               >
                 {i}
@@ -262,7 +262,7 @@ export default function Home() {
           <div id="keyboards-row2" className="d-flex justify-content-center">
             <button
               type="button"
-              className="btn btn-keyboard btn-keyboard-lg"
+              className={styles.btn_keyboard + ' btn ' + styles.btn_keyboard_lg}
               onClick={() => onClickEnter()}
             >
               ENTER
@@ -272,7 +272,7 @@ export default function Home() {
                 key={i}
                 id={i}
                 type="button"
-                className="btn btn-keyboard"
+                className={styles.btn_keyboard + ' btn'}
                 onClick={() => onClickKeyboard(i)}
               >
                 {i}
@@ -280,7 +280,7 @@ export default function Home() {
             ))}
             <button
               type="button"
-              className="btn btn-keyboard btn-keyboard-lg"
+              className={styles.btn_keyboard + ' btn ' + styles.btn_keyboard_lg}
               onClick={() => onClickDelete()}
             >
               DELETE
