@@ -84,7 +84,7 @@ export default function Home() {
     setColors(newColors);
   };
 
-  // アルファベットキー入力時の動作
+  // アルファベットキー入力時の動作a
   const onClickKeyboard = (str) => {
     if (letterIdx + str.length - 1 >= 30) return;
     // 同時N文字入力に対応
